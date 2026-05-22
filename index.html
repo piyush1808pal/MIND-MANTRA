@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMantra - Enhanced Mental Health Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Voice Welcome Overlay -->
+    <div class="voice-welcome-overlay" id="voiceWelcome">
+        <div class="welcome-animation">
+            <div class="mindful-pulse"></div>
+        </div>
+        <div class="welcome-content">
+            <h2>Welcome to MindMantra</h2>
+            <p id="voiceWelcomeText">Your enhanced mental health companion is ready</p>
+            <div class="voice-commands-preview">
+                <p>Try saying: "Go to meditation" or "Check my mood"</p>
+            </div>
+            <button class="btn btn--primary" onclick="dismissWelcome()">Get Started</button>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div class="app-container" id="mainApp">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="header-left">
+                <h1>MindMantra</h1>
+                <span class="tagline">Your Mental Health Journey</span>
+            </div>
+            <div class="header-center">
+                <div class="voice-control-panel">
+                    <button class="voice-btn" id="voiceToggle" onclick="toggleVoice()">
+                        <span class="voice-icon">🎤</span>
+                        <span id="voiceStatus">Listening...</span>
+                    </button>
+                    <select id="languageSelect" class="form-control" onchange="changeLanguage()">
+                        <option value="en-US">English</option>
+                        <option value="hi-IN">हिंदी</option>
+                        <option value="es-ES">Español</option>
+                        <option value="fr-FR">Français</option>
+                    </select>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="hero-profile">
+                    <div class="level-badge">Level <span id="userLevel">3</span></div>
+                    <div class="xp-progress">
+                        <div class="xp-fill" id="xpBar" style="width: 65%"></div>
+                        <span class="xp-text"><span id="currentXP">650</span>/1000 XP</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="main-navigation">
+            <div class="nav-item active" onclick="navigateToSection('dashboard')">
+                <div class="nav-icon">🏠</div>
+                <span>Dashboard</span>
+            </div>
+            <div class="nav-item" onclick="navigateToSection('meditation')">
+                <div class="nav-icon">🧘‍♂️</div>
+                <span>Meditation</span>
+            </div>
+            <div class="nav-item" onclick="navigateToSection('mood-tracking')">
+                <div class="nav-icon">😊</div>
+                <span>Mood Tracking</span>
+            </div>
+            <div class="nav-item" onclick="navigateToSection('cbt-tools')">
+                <div class="nav-icon">🛠️</div>
+                <span>CBT Tools</span>
+            </div>
+            <div class="nav-item" onclick="navigateToSection('gamification')">
+                <div class="nav-icon">🎮</div>
+                <span>Gamification Hub</span>
+            </div>
+            <div class="nav-item" onclick="navigateToSection('ai-companion')">
+                <div class="nav-icon">🤖</div>
+                <span>AI Companion</span>
+            </div>
+            <div class="nav-item" onclick="navigateToSection('vr-therapy')">
+                <div class="nav-icon">🥽</div>
+                <span>VR/AR</span>
+            </div>
+            <div class="nav-item" onclick="navigateToSection('facial-mood')">
+                <div class="nav-icon">😌</div>
+                <span>Facial Mood Detection</span>
+            </div>
+            <div class="nav-item" onclick="navigateToSection('yoga-detection')">
+                <div class="nav-icon">🧘‍♀️</div>
+                <span>Yoga Detection</span>
+            </div>
+            <div class="nav-item" onclick="navigateToSection('certification')">
+                <div class="nav-icon">🏆</div>
+                <span>Certification</span>
+            </div>
+            <div class="nav-item" onclick="navigateToSection('guardian')">
+                <div class="nav-icon">👨‍👩‍👧‍👦</div>
+                <span>Guardian</span>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section class="content-section active" id="dashboard">
+                <div class="section-header">
+                    <h2>Mental Health Dashboard</h2>
+                    <div class="wellness-score">
+                        <span class="score-label">Wellness Score:</span>
+                        <span class="score-value" id="wellnessScore">847</span>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="metric-cards">
+                        <div class="metric-card">
+                            <div class="metric-icon">😊</div>
+                            <div class="metric-value" id="moodScore">8.2</div>
+                            <div class="metric-label">Mood Score</div>
+                            <div class="metric-trend positive">+0.5</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">🧘‍♂️</div>
+                            <div class="metric-value" id="meditationStreak">7</div>
+                            <div class="metric-label">Day Streak</div>
+                            <div class="metric-trend positive">+1</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">💪</div>
+                            <div class="metric-value" id="copingScore">9.1</div>
+                            <div class="metric-label">Coping Skills</div>
+                            <div class="metric-trend positive">+0.3</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">🎯</div>
+                            <div class="metric-value" id="goalsProgress">65%</div>
+                            <div class="metric-label">Goals Progress</div>
+                            <div class="metric-trend positive">+5%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-actions">
+                        <h3>Quick Actions</h3>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="quickMoodCheck()">Quick Mood Check</button>
+                            <button class="action-btn" onclick="startEmergencySupport()">Crisis Support</button>
+                            <button class="action-btn" onclick="startQuickMeditation()">5-Min Meditation</button>
+                            <button class="action-btn" onclick="showCopingCards()">Coping Cards</button>
+                        </div>
+                    </div>
+
+                    <div class="progress-chart">
+                        <h3>Weekly Progress</h3>
+                        <div class="chart-container" style="position: relative; height: 200px;">
+                            <canvas id="weeklyProgressChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Meditation Section -->
+            <section class="content-section" id="meditation">
+                <div class="section-header">
+                    <h2>Meditation & Mindfulness</h2>
+                    <div class="music-controls" id="musicControls">
+                        <button class="music-btn" onclick="toggleMusic()">
+                            <span id="musicIcon">▶️</span>
+                            <span id="musicStatus">Play Music</span>
+                        </button>
+                        <div class="volume-control">
+                            <span>🔊</span>
+                            <input type="range" id="volumeSlider" min="0" max="100" value="50">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="meditation-grid">
+                    <div class="meditation-categories">
+                        <div class="category-card" onclick="selectMeditationCategory('meditation')">
+                            <h3>Guided Meditation</h3>
+                            <p>5 sessions available</p>
+                            <div class="category-duration">15-25 minutes</div>
+                        </div>
+                        <div class="category-card" onclick="selectMeditationCategory('sleep')">
+                            <h3>Sleep Stories</h3>
+                            <p>5 sessions available</p>
+                            <div class="category-duration">30-60 minutes</div>
+                        </div>
+                        <div class="category-card" onclick="selectMeditationCategory('stressRelief')">
+                            <h3>Stress Relief</h3>
+                            <p>5 sessions available</p>
+                            <div class="category-duration">8-20 minutes</div>
+                        </div>
+                        <div class="category-card" onclick="selectMeditationCategory('advancedPractice')">
+                            <h3>Advanced Practice</h3>
+                            <p>5 sessions available</p>
+                            <div class="category-duration">25-45 minutes</div>
+                        </div>
+                    </div>
+
+                    <div class="mood-based-music">
+                        <h3>Mood Based Music</h3>
+                        <div class="mood-buttons">
+                            <button class="mood-btn" onclick="selectMoodMusic('happy')">😊 Happy</button>
+                            <button class="mood-btn" onclick="selectMoodMusic('energetic')">⚡ Energetic</button>
+                            <button class="mood-btn" onclick="selectMoodMusic('calm')">😌 Calm</button>
+                            <button class="mood-btn" onclick="selectMoodMusic('reflective')">💭 Reflective</button>
+                        </div>
+                        <div class="current-track" id="currentTrack">
+                            <div class="track-info">
+                                <div class="track-title" id="trackTitle">Select mood for music</div>
+                                <div class="track-artist" id="trackArtist"></div>
+                            </div>
+                            <div class="track-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="trackProgress"></div>
+                                </div>
+                                <div class="track-duration" id="trackDuration">0:00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="meditation-session" id="meditationSession">
+                        <h3 id="sessionTitle">Select a category to begin</h3>
+                        <div class="session-list" id="sessionList">
+                            <!-- Sessions will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mood Tracking Section -->
+            <section class="content-section" id="mood-tracking">
+                <div class="section-header">
+                    <h2>Advanced Mood Tracking</h2>
+                    <button class="btn btn--primary" onclick="startDetailedMoodLog()">🎤 Voice Mood Log</button>
+                </div>
+
+                <div class="mood-tracking-grid">
+                    <div class="mood-calendar">
+                        <h3>Mood Calendar</h3>
+                        <div class="calendar-grid" id="moodCalendar">
+                            <!-- Calendar will be generated here -->
+                        </div>
+                    </div>
+
+                    <div class="mood-analytics">
+                        <h3>Mood Analytics</h3>
+                        <div class="chart-container" style="position: relative; height: 250px;">
+                            <canvas id="moodTrendChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="correlation-tracking">
+                        <h3>Correlation Tracking</h3>
+                        <div class="correlation-items">
+                            <div class="correlation-item">
+                                <span>Sleep Quality</span>
+                                <div class="correlation-bar">
+                                    <div class="correlation-fill" style="width: 78%"></div>
+                                </div>
+                                <span>78%</span>
+                            </div>
+                            <div class="correlation-item">
+                                <span>Exercise</span>
+                                <div class="correlation-bar">
+                                    <div class="correlation-fill" style="width: 65%"></div>
+                                </div>
+                                <span>65%</span>
+                            </div>
+                            <div class="correlation-item">
+                                <span>Social Interaction</span>
+                                <div class="correlation-bar">
+                                    <div class="correlation-fill" style="width: 82%"></div>
+                                </div>
+                                <span>82%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mood-goals">
+                        <h3>Mood Goals</h3>
+                        <div class="goal-item">
+                            <span>Maintain average mood ≥ 7</span>
+                            <div class="goal-progress">
+                                <div class="goal-fill" style="width: 85%"></div>
+                            </div>
+                            <span class="goal-status">85%</span>
+                        </div>
+                        <div class="goal-item">
+                            <span>Reduce anxiety episodes</span>
+                            <div class="goal-progress">
+                                <div class="goal-fill" style="width: 72%"></div>
+                            </div>
+                            <span class="goal-status">72%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CBT Tools Section -->
+            <section class="content-section" id="cbt-tools">
+                <div class="section-header">
+                    <h2>CBT Tools & Techniques</h2>
+                    <div class="cbt-stats">
+                        <span>Sessions Completed: <strong>23</strong></span>
+                        <span>Insights Generated: <strong>47</strong></span>
+                    </div>
+                </div>
+
+                <div class="cbt-tools-grid">
+                    <div class="thought-diary">
+                        <h3>Advanced Thought Diary</h3>
+                        <p>9-step guided CBT process with AI insights</p>
+                        <button class="btn btn--primary" onclick="startThoughtDiary()">Start Thought Diary</button>
+                        <div class="diary-stats">
+                            <span>Last Session: Today, 2:30 PM</span>
+                            <span>Progress Score: 8.4/10</span>
+                        </div>
+                    </div>
+
+                    <div class="coping-cards">
+                        <h3>Interactive Coping Cards</h3>
+                        <p>Drag-and-drop personalized strategies</p>
+                        <button class="btn btn--secondary" onclick="openCopingCards()">View Coping Cards</button>
+                        <div class="coping-preview" id="copingPreview">
+                            <!-- Preview cards will be shown here -->
+                        </div>
+                    </div>
+
+                    <div class="cognitive-assessment">
+                        <h3>Enhanced Cognitive Assessment</h3>
+                        <p>Real-time cognitive assessment tools</p>
+                        <div class="assessment-cards">
+                            <div class="assessment-card" onclick="startCognitiveAssessment('attention')">
+                                <div class="assessment-icon">🎯</div>
+                                <span>Attention Test</span>
+                            </div>
+                            <div class="assessment-card" onclick="startCognitiveAssessment('memory')">
+                                <div class="assessment-icon">🧠</div>
+                                <span>Memory Assessment</span>
+                            </div>
+                            <div class="assessment-card" onclick="startCognitiveAssessment('processing')">
+                                <div class="assessment-icon">⚡</div>
+                                <span>Processing Speed</span>
+                            </div>
+                        </div>
+                        <div class="cognitive-progress">
+                            <h4>Cognitive Dashboard</h4>
+                            <div class="chart-container" style="position: relative; height: 200px;">
+                                <canvas id="cognitiveChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gamification Hub Section -->
+            <section class="content-section" id="gamification">
+                <div class="section-header">
+                    <h2>Gamification Hub</h2>
+                    <div class="gamification-stats">
+                        <span>Level: <strong id="playerLevel">3</strong></span>
+                        <span>Total XP: <strong id="totalXP">2,450</strong></span>
+                        <span>Achievements: <strong id="achievementCount">12</strong></span>
+                    </div>
+                </div>
+
+                <div class="gamification-grid">
+                    <div class="quest-cards">
+                        <h3>Mental Health Quests</h3>
+                        <div class="quest-grid">
+                            <div class="quest-card" onclick="startGame(1)">
+                                <div class="game-icon">🧠</div>
+                                <h4>Mindful Memory Match</h4>
+                                <p>Match meditation cards</p>
+                                <div class="xp-reward">+15 XP</div>
+                                <div class="difficulty easy">Easy</div>
+                            </div>
+                            <div class="quest-card" onclick="startGame(4)">
+                                <div class="game-icon">🧩</div>
+                                <h4>Stress Relief Puzzle</h4>
+                                <p>Complete calming puzzles</p>
+                                <div class="xp-reward">+20 XP</div>
+                                <div class="difficulty easy">Easy</div>
+                            </div>
+                            <div class="quest-card" onclick="startGame(7)">
+                                <div class="game-icon">🎯</div>
+                                <h4>Mental Health Trivia</h4>
+                                <p>Test mental health knowledge</p>
+                                <div class="xp-reward">+10 XP</div>
+                                <div class="difficulty easy">Easy</div>
+                            </div>
+                            <div class="quest-card" onclick="startGame(10)">
+                                <div class="game-icon">⏱️</div>
+                                <h4>Mindful Breathing Timer</h4>
+                                <p>Match breathing to visual cues</p>
+                                <div class="xp-reward">+12 XP</div>
+                                <div class="difficulty easy">Easy</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="achievements">
+                        <h3>Recent Achievements</h3>
+                        <div class="achievement-list" id="achievementList">
+                            <!-- Achievements will be populated here -->
+                        </div>
+                    </div>
+
+                    <div class="leaderboard">
+                        <h3>Weekly Challenge</h3>
+                        <div class="challenge-progress">
+                            <h4>Complete 5 mindfulness sessions</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%"></div>
+                            </div>
+                            <span>3/5 completed</span>
+                        </div>
+                        <div class="leaderboard-list">
+                            <div class="leader-item">
+                                <span class="rank">1</span>
+                                <span class="name">You</span>
+                                <span class="score">1,250 XP</span>
+                            </div>
+                            <div class="leader-item">
+                                <span class="rank">2</span>
+                                <span class="name">Sarah M.</span>
+                                <span class="score">1,180 XP</span>
+                            </div>
+                            <div class="leader-item">
+                                <span class="rank">3</span>
+                                <span class="name">Alex K.</span>
+                                <span class="score">1,050 XP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Companion Section -->
+            <section class="content-section" id="ai-companion">
+                <div class="section-header">
+                    <h2>Live AI Talk Dashboard</h2>
+                    <div class="ai-status">
+                        <span class="status-dot active"></span>
+                        <span>AI Therapist Online</span>
+                    </div>
+                </div>
+
+                <div class="ai-companion-grid">
+                    <div class="chat-interface">
+                        <div class="chat-history" id="chatHistory">
+                            <div class="message ai-message">
+                                <div class="message-avatar">🤖</div>
+                                <div class="message-content">
+                                    <p>Hello! I'm your AI mental health companion. How are you feeling today? You can speak to me or type your thoughts.</p>
+                                    <span class="message-time">Just now</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-input-container">
+                            <div class="input-controls">
+                                <button class="input-btn" onclick="toggleVoiceChat()" id="voiceChatBtn">🎤</button>
+                                <input type="text" id="chatInput" placeholder="Type your message or use voice..." class="form-control">
+                                <button class="input-btn" onclick="sendMessage()">Send</button>
+                            </div>
+                            <div class="voice-indicator" id="voiceChatIndicator" style="display: none;">
+                                <div class="voice-wave"></div>
+                                <span>Listening...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ai-insights">
+                        <h3>AI Insights</h3>
+                        <div class="insight-cards">
+                            <div class="insight-card">
+                                <h4>Emotional Pattern</h4>
+                                <p>You tend to feel more positive in the mornings. Consider scheduling important tasks earlier in the day.</p>
+                            </div>
+                            <div class="insight-card">
+                                <h4>Stress Triggers</h4>
+                                <p>Work meetings appear to be a consistent stress trigger. Try the breathing exercise before meetings.</p>
+                            </div>
+                            <div class="insight-card crisis">
+                                <h4>🚨 Crisis Support</h4>
+                                <p>If you're experiencing thoughts of self-harm, please reach out immediately:</p>
+                                <button class="btn btn--error" onclick="activateCrisisSupport()">Get Help Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VR/AR Therapy Section -->
+            <section class="content-section" id="vr-therapy">
+                <div class="section-header">
+                    <h2>VR/AR Therapy Integration</h2>
+                    <div class="vr-status" id="vrStatus">
+                        <span>WebXR Status: Checking...</span>
+                    </div>
+                </div>
+
+                <div class="vr-therapy-grid">
+                    <div class="vr-environments">
+                        <h3>Immersive Environments</h3>
+                        <div class="environment-grid">
+                            <div class="environment-card" onclick="startVRSession(1)">
+                                <div class="env-preview">🌲</div>
+                                <h4>Peaceful Forest</h4>
+                                <p>Serene woodland setting</p>
+                                <div class="session-info">15-30 min • Calm</div>
+                            </div>
+                            <div class="environment-card" onclick="startVRSession(2)">
+                                <div class="env-preview">🏖️</div>
+                                <h4>Ocean Beach</h4>
+                                <p>Calming waves and sand</p>
+                                <div class="session-info">20-45 min • Relaxed</div>
+                            </div>
+                            <div class="environment-card" onclick="startVRSession(3)">
+                                <div class="env-preview">🏔️</div>
+                                <h4>Mountain Lake</h4>
+                                <p>Tranquil alpine setting</p>
+                                <div class="session-info">10-25 min • Peaceful</div>
+                            </div>
+                            <div class="environment-card" onclick="startVRSession(4)">
+                                <div class="env-preview">🌺</div>
+                                <h4>Garden Sanctuary</h4>
+                                <p>Beautiful botanical garden</p>
+                                <div class="session-info">15-35 min • Rejuvenated</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="vr-session-controls">
+                        <h3>Session Controls</h3>
+                        <div class="session-display" id="vrSessionDisplay">
+                            <div class="session-preview">Select an environment to begin</div>
+                            <div class="session-controls" id="vrControls" style="display: none;">
+                                <button class="control-btn" onclick="pauseVRSession()">⏸️ Pause</button>
+                                <button class="control-btn" onclick="adjustVRSettings()">⚙️ Settings</button>
+                                <button class="control-btn" onclick="endVRSession()">⏹️ End Session</button>
+                            </div>
+                        </div>
+                        <div class="session-progress" id="vrProgress" style="display: none;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="vrProgressBar"></div>
+                            </div>
+                            <div class="session-time">
+                                <span id="vrElapsedTime">00:00</span> / <span id="vrTotalTime">15:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Facial Mood Detection Section -->
+            <section class="content-section" id="facial-mood">
+                <div class="section-header">
+                    <h2>Facial Mood Detection</h2>
+                    <div class="privacy-notice">
+                        <span>🔒 All processing done locally - your privacy is protected</span>
+                    </div>
+                </div>
+
+                <div class="facial-detection-grid">
+                    <div class="camera-interface">
+                        <h3>Real-time Emotion Analysis</h3>
+                        <div class="camera-container">
+                            <video id="cameraFeed" width="400" height="300" autoplay style="display: none;"></video>
+                            <div class="camera-placeholder" id="cameraPlaceholder">
+                                <div class="camera-icon">📸</div>
+                                <p>Click "Start Analysis" to begin mood detection</p>
+                                <button class="btn btn--primary" onclick="startFacialAnalysis()">Start Analysis</button>
+                            </div>
+                        </div>
+                        <div class="camera-controls" id="cameraControls" style="display: none;">
+                            <button class="control-btn" onclick="pauseFacialAnalysis()">⏸️ Pause</button>
+                            <button class="control-btn" onclick="stopFacialAnalysis()">⏹️ Stop</button>
+                        </div>
+                    </div>
+
+                    <div class="emotion-analysis">
+                        <h3>Emotion Results</h3>
+                        <div class="emotion-meters" id="emotionMeters">
+                            <div class="emotion-meter">
+                                <span class="emotion-label">Happy</span>
+                                <div class="meter-bar">
+                                    <div class="meter-fill" style="width: 0%"></div>
+                                </div>
+                                <span class="emotion-value">0%</span>
+                            </div>
+                            <div class="emotion-meter">
+                                <span class="emotion-label">Sad</span>
+                                <div class="meter-bar">
+                                    <div class="meter-fill" style="width: 0%"></div>
+                                </div>
+                                <span class="emotion-value">0%</span>
+                            </div>
+                            <div class="emotion-meter">
+                                <span class="emotion-label">Angry</span>
+                                <div class="meter-bar">
+                                    <div class="meter-fill" style="width: 0%"></div>
+                                </div>
+                                <span class="emotion-value">0%</span>
+                            </div>
+                            <div class="emotion-meter">
+                                <span class="emotion-label">Anxious</span>
+                                <div class="meter-bar">
+                                    <div class="meter-fill" style="width: 0%"></div>
+                                </div>
+                                <span class="emotion-value">0%</span>
+                            </div>
+                        </div>
+                        <div class="mood-coaching" id="moodCoaching">
+                            <h4>Facial Expression Coaching</h4>
+                            <p>Analysis will appear here when detection is active.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Yoga Detection Section -->
+            <section class="content-section" id="yoga-detection">
+                <div class="section-header">
+                    <h2>Enhanced Yoga & Exercise</h2>
+                    <div class="yoga-stats">
+                        <span>Sessions Completed: <strong>45</strong></span>
+                        <span>Poses Mastered: <strong>12</strong></span>
+                    </div>
+                </div>
+
+                <div class="yoga-grid">
+                    <div class="pose-library">
+                        <h3>Comprehensive Pose Library</h3>
+                        <div class="difficulty-tabs">
+                            <button class="tab-btn active" onclick="showPosesByDifficulty('beginner')">Beginner</button>
+                            <button class="tab-btn" onclick="showPosesByDifficulty('intermediate')">Intermediate</button>
+                            <button class="tab-btn" onclick="showPosesByDifficulty('advanced')">Advanced</button>
+                        </div>
+                        <div class="pose-cards" id="poseCards">
+                            <!-- Pose cards will be populated here -->
+                        </div>
+                    </div>
+
+                    <div class="pose-instructions">
+                        <h3>Step-by-Step Instructions</h3>
+                        <div class="instruction-display" id="instructionDisplay">
+                            <div class="pose-preview">
+                                <div class="pose-icon">🧘‍♀️</div>
+                                <p>Select a pose to see detailed instructions</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pose-tracking">
+                        <h3>Exercise Tracking</h3>
+                        <div class="tracking-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Today's Session</span>
+                                <span class="stat-value">25 minutes</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Weekly Goal</span>
+                                <span class="stat-value">4/5 days</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Accuracy Score</span>
+                                <span class="stat-value">87%</span>
+                            </div>
+                        </div>
+                        <div class="achievement-certificates">
+                            <h4>Achievement Certificates</h4>
+                            <div class="certificate-preview" id="yogaCertificates">
+                                <div class="certificate-item">
+                                    <div class="cert-icon">🏆</div>
+                                    <span>7-Day Streak Master</span>
+                                    <button class="btn btn--sm" onclick="downloadCertificate('yoga-streak')">Download</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Certification Section -->
+            <section class="content-section" id="certification">
+                <div class="section-header">
+                    <h2>Auto-Generated Certificates</h2>
+                    <div class="cert-stats">
+                        <span>Certificates Earned: <strong>3</strong></span>
+                        <span>In Progress: <strong>2</strong></span>
+                    </div>
+                </div>
+
+                <div class="certification-grid">
+                    <div class="certificate-templates">
+                        <div class="cert-card completed">
+                            <div class="cert-icon">🚑</div>
+                            <h3>Mental Health First Aid</h3>
+                            <p>Crisis response training completion</p>
+                            <div class="cert-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 100%"></div>
+                                </div>
+                                <span>100% Complete</span>
+                            </div>
+                            <div class="cert-requirements">
+                                <span>✓ 8 modules completed</span>
+                                <span>✓ Assessment passed (85%)</span>
+                                <span>✓ Scenarios completed</span>
+                            </div>
+                            <div class="cert-actions">
+                                <button class="btn btn--primary" onclick="downloadCertificate('mental-health-first-aid')">Download Certificate</button>
+                                <span class="cert-date">Valid until: Sep 2027</span>
+                            </div>
+                        </div>
+
+                        <div class="cert-card in-progress">
+                            <div class="cert-icon">🧠</div>
+                            <h3>CBT Fundamentals Practitioner</h3>
+                            <p>Cognitive behavioral therapy techniques</p>
+                            <div class="cert-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%"></div>
+                                </div>
+                                <span>65% Complete</span>
+                            </div>
+                            <div class="cert-requirements">
+                                <span>✓ CBT concepts mastered</span>
+                                <span>⏳ Complete exercises (3/5)</span>
+                                <span>⏳ Practice strategies</span>
+                            </div>
+                            <div class="cert-actions">
+                                <button class="btn btn--secondary" onclick="continueCertification('cbt-fundamentals')">Continue Learning</button>
+                                <span class="cert-eta">Est. completion: 2 weeks</span>
+                            </div>
+                        </div>
+
+                        <div class="cert-card available">
+                            <div class="cert-icon">🧘‍♂️</div>
+                            <h3>Certified Mindfulness Practitioner</h3>
+                            <p>Mindfulness and meditation expertise</p>
+                            <div class="cert-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 25%"></div>
+                                </div>
+                                <span>25% Complete</span>
+                            </div>
+                            <div class="cert-requirements">
+                                <span>⏳ 40 hours practice (10/40)</span>
+                                <span>⏳ Master meditation styles</span>
+                                <span>⏳ Teaching ability assessment</span>
+                            </div>
+                            <div class="cert-actions">
+                                <button class="btn btn--outline" onclick="startCertification('mindfulness-practitioner')">Start Certification</button>
+                                <span class="cert-duration">36 months validity</span>
+                            </div>
+                        </div>
+
+                        <div class="cert-card available">
+                            <div class="cert-icon">❤️</div>
+                            <h3>Mental Health Volunteer Recognition</h3>
+                            <p>Community service dedication</p>
+                            <div class="cert-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 0%"></div>
+                                </div>
+                                <span>0% Complete</span>
+                            </div>
+                            <div class="cert-requirements">
+                                <span>⏳ 20 hours service (0/20)</span>
+                                <span>⏳ Positive feedback</span>
+                                <span>⏳ Compassionate support</span>
+                            </div>
+                            <div class="cert-actions">
+                                <button class="btn btn--outline" onclick="startVolunteering()">Start Volunteering</button>
+                                <span class="cert-duration">12 months validity</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Guardian Section -->
+            <section class="content-section" id="guardian">
+                <div class="section-header">
+                    <h2>Guardian Control Enhancement</h2>
+                    <div class="guardian-status">
+                        <span class="status-dot active"></span>
+                        <span>2 guardians monitoring</span>
+                    </div>
+                </div>
+
+                <div class="guardian-grid">
+                    <div class="guardian-dashboard">
+                        <h3>Comprehensive Progress Dashboard</h3>
+                        <div class="progress-overview">
+                            <div class="overview-card">
+                                <h4>Overall Wellness</h4>
+                                <div class="chart-container" style="position: relative; height: 150px;">
+                                    <canvas id="guardianWellnessChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="overview-card">
+                                <h4>Activity Summary</h4>
+                                <div class="activity-stats">
+                                    <div class="activity-item">
+                                        <span>Meditation Sessions</span>
+                                        <span class="activity-count">7 this week</span>
+                                    </div>
+                                    <div class="activity-item">
+                                        <span>Mood Check-ins</span>
+                                        <span class="activity-count">5 this week</span>
+                                    </div>
+                                    <div class="activity-item">
+                                        <span>CBT Exercises</span>
+                                        <span class="activity-count">3 this week</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="safety-monitoring">
+                        <h3>Safety Monitoring</h3>
+                        <div class="safety-alerts">
+                            <div class="alert-item low">
+                                <span class="alert-icon">🟢</span>
+                                <div class="alert-content">
+                                    <span class="alert-title">All Clear</span>
+                                    <span class="alert-description">No concerning patterns detected</span>
+                                </div>
+                                <span class="alert-time">Last check: 2 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="emergency-protocols">
+                            <h4>Emergency Intervention</h4>
+                            <div class="protocol-item">
+                                <span>Crisis Keywords Detection</span>
+                                <span class="status enabled">Enabled</span>
+                            </div>
+                            <div class="protocol-item">
+                                <span>Mood Threshold Alerts</span>
+                                <span class="status enabled">Enabled</span>
+                            </div>
+                            <div class="protocol-item">
+                                <span>Inactivity Monitoring</span>
+                                <span class="status enabled">Enabled</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="guardian-settings">
+                        <h3>Customizable Controls</h3>
+                        <div class="setting-item">
+                            <span class="setting-label">Daily Check-in Reminder</span>
+                            <button class="toggle-btn active" onclick="toggleSetting('daily-reminder')">
+                                <span class="toggle-slider"></span>
+                            </button>
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Share Weekly Reports</span>
+                            <button class="toggle-btn active" onclick="toggleSetting('weekly-reports')">
+                                <span class="toggle-slider"></span>
+                            </button>
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Crisis Alert Notifications</span>
+                            <button class="toggle-btn active" onclick="toggleSetting('crisis-alerts')">
+                                <span class="toggle-slider"></span>
+                            </button>
+                        </div>
+                        <div class="contacts-list">
+                            <h4>Designated Contacts</h4>
+                            <div class="contact-item">
+                                <span>Dr. Sarah Johnson (Therapist)</span>
+                                <button class="btn btn--sm" onclick="contactGuardian('therapist')">Contact</button>
+                            </div>
+                            <div class="contact-item">
+                                <span>Mom (Emergency Contact)</span>
+                                <button class="btn btn--sm" onclick="contactGuardian('emergency')">Contact</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Voice Command Display -->
+        <div class="voice-command-display" id="voiceCommandDisplay">
+            <div class="command-text" id="commandText"></div>
+            <div class="command-status" id="commandStatus"></div>
+        </div>
+
+        <!-- Floating Action Button -->
+        <div class="fab-container">
+            <button class="fab" onclick="showQuickActions()" id="fabButton">
+                <span class="fab-icon">✨</span>
+            </button>
+        </div>
+
+        <!-- Tutorial System -->
+        <div class="tutorial-overlay hidden" id="tutorialOverlay">
+            <div class="tutorial-content">
+                <h3 id="tutorialTitle">Welcome to MindMantra</h3>
+                <p id="tutorialText">Let's take a quick tour of your enhanced mental health platform.</p>
+                <div class="tutorial-controls">
+                    <button class="btn btn--outline" onclick="skipTutorial()">Skip</button>
+                    <button class="btn btn--primary" onclick="nextTutorialStep()">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Thought Diary Modal -->
+    <div class="modal hidden" id="thoughtDiaryModal">
+        <div class="modal-backdrop" onclick="closeModal('thoughtDiaryModal')"></div>
+        <div class="modal-content thought-diary-modal">
+            <div class="modal-header">
+                <h2>Advanced Thought Diary</h2>
+                <button class="modal-close" onclick="closeModal('thoughtDiaryModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="diary-steps" id="diarySteps">
+                    <!-- Steps will be populated here -->
+                </div>
+                <div class="diary-navigation">
+                    <button class="btn btn--outline" onclick="previousDiaryStep()" id="prevBtn">Previous</button>
+                    <span class="step-indicator" id="stepIndicator">Step 1 of 9</span>
+                    <button class="btn btn--primary" onclick="nextDiaryStep()" id="nextBtn">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Modal -->
+    <div class="modal hidden" id="gameModal">
+        <div class="modal-backdrop" onclick="closeModal('gameModal')"></div>
+        <div class="modal-content game-modal">
+            <div class="modal-header">
+                <h2 id="gameTitle">Mental Health Game</h2>
+                <div class="game-stats">
+                    <span>Score: <span id="gameScore">0</span></span>
+                    <span>Time: <span id="gameTime">00:00</span></span>
+                </div>
+                <button class="modal-close" onclick="closeModal('gameModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="game-area" id="gameArea">
+                    <!-- Game content will be generated here -->
+                </div>
+                <div class="game-controls">
+                    <button class="btn btn--outline" onclick="pauseGame()">Pause</button>
+                    <button class="btn btn--primary" onclick="resumeGame()">Resume</button>
+                    <button class="btn btn--secondary" onclick="restartGame()">Restart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
